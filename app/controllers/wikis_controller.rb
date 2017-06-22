@@ -52,5 +52,6 @@ class WikisController < ApplicationController
     else
       flash.now[:aler] = "There was an error deleting wiki. Please try again."
       render :show
+    end
   end
 end

@@ -1,13 +1,8 @@
 require 'rails_helper'
-include RandomData
 
 RSpec.describe WikisController, type: :controller do
-  let(:my_user) { FactoryGirl.create(:user) }
-  let(:my_wiki) { FactoryGirl.create(:wiki, user: my_user) }
+  let(:my_wiki) { Wiki.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
 
-  before(:each) do
-    sign_in my_user
-  end
 
   describe "GET #index" do
     it "returns http success" do
@@ -15,9 +10,9 @@ RSpec.describe WikisController, type: :controller do
       expect(response).to have_http_status(:success)
     end
 
-    it "assigns [my_wiki] to @wiki" do
+    it "assigns [my_wiki] to @wikis" do
       get :index
-      expect(assigns(:wiki)).to eq([my_wiki])
+      expect(assigns(:wikis)).to eq([my_wiki])
     end
   end
 
@@ -66,7 +61,7 @@ RSpec.describe WikisController, type: :controller do
     end
 
     it "redirects to the new wiki" do
-      post :create, post: { title: RandomData.random_sentence, body: RandomData.random_paragraph }
+      post :create, wiki: { title: RandomData.random_sentence, body: RandomData.random_paragraph }
       expect(response).to redirect_to Wiki.last
     end
   end
