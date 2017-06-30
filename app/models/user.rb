@@ -4,14 +4,13 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :confirmable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+
+  has_many :wikis
+
+  before_save { self.role ||= :member }
+
   enum role: [:member, :premium, :admin]
 
-  has_one :role
+  # has_one :role
 
-  after_initialize :init
-
-  def init
-    self.role ||= 0
-  end
-  
 end
