@@ -7,9 +7,9 @@ class User < ActiveRecord::Base
 
   has_many :wikis
 
-  before_save { self.role ||= :member }
+  before_save { self.role ||= :standard }
 
-  enum role: [:member, :premium, :admin]
+  enum role: [:standard, :premium, :admin]
 
   # has_one :role
 

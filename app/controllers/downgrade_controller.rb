@@ -1,0 +1,2 @@
+class DowngradeController < ApplicationController
+end
