@@ -11,24 +11,37 @@ require 'random_data'
 5.times do
   User.create!(
   email:    Faker::Internet.email,
-  password: RandomData.random_sentence
+  password: 'password'
   )
 end
 
 # Create admin user
 1.times do
   User.create!(
-  email:     'realtimschmidt@gmail.com',
-  password:  'helloworld',
-  role:       2
+  email:                  'admin@example.com',
+  password:               'password',
+  password_confirmation:  'password',
+  role:                   'admin'
+  )
+end
+
+# Create a premium user
+1.times do
+  User.create!(
+  email:                  'premium@example.com',
+  password:               'password',
+  password_confirmation:  'password',
+  role:                   'premium'
   )
 end
 
 # Create standard user
 1.times do
   User.create!(
-  email:    Faker::Internet.email,
-  password: 'helloworld'
+  email:                  'standard@example.com',
+  password:               'password',
+  password_confirmation:  'password',
+  role:                   'standard'
   )
 end
 users = User.all
@@ -38,9 +51,10 @@ users = User.all
   Wiki.create!(
     user:   users.sample,
     title:  Faker::Name.title,
-    body:   RandomData.random_paragraph
+    body:   RandomData.random_paragraph,
   )
 end
+
 wikis = Wikis.all
 
 puts "Seed finished"

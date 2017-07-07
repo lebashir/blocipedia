@@ -1,6 +1,10 @@
 class WikisController < ApplicationController
   def index
-    @wikis = Wiki.all
+    if current_user.admin? || current_user.premium?
+      @wikis = Wiki.all
+    else
+      @wikis = Wiki.where(private: false)
+    end
   end
 
   def show
@@ -13,6 +17,7 @@ class WikisController < ApplicationController
 
   def create
     @wiki = Wiki.new(wiki_params)
+    @wiki.user = current_user
 
     if @wiki.save
       flash[:notice] = "Wiki was created."
