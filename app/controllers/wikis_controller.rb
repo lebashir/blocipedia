@@ -1,10 +1,6 @@
 class WikisController < ApplicationController
   def index
-    if current_user.admin? || current_user.premium?
-      @wikis = Wiki.all
-    else
-      @wikis = Wiki.where(private: false)
-    end
+    @wikis = policy_scope(Wiki)
   end
 
   def show
@@ -36,7 +32,7 @@ class WikisController < ApplicationController
     @wiki = Wiki.find(params[:id])
     authorize @wiki
 
-    if @wiki.save
+    if @wiki.update_attributes(wiki_params)
       flash[:notice] = "Wiki was updated."
       redirect_to @wiki
     else
@@ -57,6 +53,7 @@ class WikisController < ApplicationController
       render :show
     end
   end
+
 
   private
 

@@ -55,7 +55,7 @@ users = User.all
   )
 end
 
-wikis = Wikis.all
+wikis = Wiki.all
 
 puts "Seed finished"
 puts "#{User.count} users created"
